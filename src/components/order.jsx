@@ -1,10 +1,11 @@
 import React from 'react';
 
-function Pizza(){
+function Order(){
     return(
         <>
+            <p>Order</p>
         </>
     )
 }
 
-export default Pizza;
+export default Order;

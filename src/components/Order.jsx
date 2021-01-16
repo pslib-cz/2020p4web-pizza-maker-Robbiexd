@@ -1,35 +1,51 @@
-import React from 'react';
-import Pizza from './Pizza';
-import Calzone from './Calzone';
+import React, {useContext} from 'react';
+import IngredientList from './IngredientList';
+import ChosenIngredient from './ChosenIngredient';
 
-import {Button, Badge} from 'reactstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import Card from "react-bootstrap/Card";
+import {StateContext} from '../providers/providers';
 
-function Order({ingredientsList}){
+import {Badge, Row, Col, Card, CardBody, CardTitle, ListGroup} from 'reactstrap';
+
+
+function Order(){
+
+    const food = window.location.href === "http://localhost:3000/order/pizza"? "Pizza": "Calzone";
+
+    const state = useContext(StateContext);
+
     return(
         <>
-            <Row>
-                <Col>
-                    <p>Order</p>
-                    <Pizza
-                    ingredientsList={ingredientsList}
-                    ></Pizza>
-                </Col>              
-            </Row>
-            
-            <Row>
-                <Col>
-                    <p>Order</p>
-                    <Calzone
-                    ingredientsList={ingredientsList}
-                    ></Calzone>
-                </Col>              
-            </Row>
+            <Card>
+                <CardBody>
+                    <Row>
+                        <Col>
+                            <CardTitle>{food}</CardTitle>
+                            <Badge> Avaiable Ingredients </Badge>
+                        </Col>
+                    </Row>
+                    <Row> 
+                        <Col ></Col>
+                        <Col xs="auto">
+                            <h2>Choose ingredients</h2>
+                            <IngredientList /></Col>
+                        <Col xs="auto">
+                            <h2>Selected ingredients</h2>
+                            <ListGroup>
+                                {state.chosenIngredients.map((d, i) => (
+                                            <ChosenIngredient
+                                                name={d.name}
+                                                category={d.category}
+                                            ></ChosenIngredient>
+                                        ))}
+
+                            </ListGroup>
+                        </Col>
+                        <Col></Col>                     
+                    </Row>
+                </CardBody>
+            </Card>
         </>
-    )
+    );
 }
 
 export default Order;
